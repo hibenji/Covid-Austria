@@ -16,6 +16,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+$configs = include('config.php');
+
+$webhookurl = $configs["webhook-url"];
+
 $url = 'https://info.gesundheitsministerium.gv.at/data/timeline-faelle-bundeslaender.csv';
 
 $myfile = fopen("data2.csv", "w") or die("Unable to open file!");
@@ -80,7 +84,7 @@ while (($line = fgetcsv($file, 5000,";")) !== FALSE) {
         $status_write = fopen("today_intensiv.txt", "w");
         fwrite($status_write, '1');
 
-        $url = 'http://covid_back.benji.link/mehr/';
+        $url = $configs["twitter-backend"] . '/mehr/';
         $url .= $yesterday_int . "/" . $intensiv . "/" . $yesterday_tod;
 
         echo $url;
@@ -107,9 +111,7 @@ while (($line = fgetcsv($file, 5000,";")) !== FALSE) {
         echo '<br>';
         echo $intensiv;
 
-
-      $webhookurl = "https://discord.com/api/webhooks/906110563522871326/RbbNxO80DzicNMWOjU1zhA2rV_ULq1lwAHGNWT-itkfxPpGOJJiEAIcVs1tapNfQ4tkA";
-
+        
      echo 'Heute <strong>' . $intensiv . '</strong> Intensivfälle in Östereich.';
 
 

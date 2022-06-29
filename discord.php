@@ -13,6 +13,10 @@
 
 <?php
 
+$configs = include('config.php');
+
+$webhookurl = $configs["webhook-url"];
+
 $url = 'https://info.gesundheitsministerium.gv.at/data/timeline-faelle-ems.csv';
 
 $myfile = fopen("data.csv", "w") or die("Unable to open file!");
@@ -72,12 +76,10 @@ while (($line = fgetcsv($file, 5000,";")) !== FALSE) {
       $status_write = fopen("today.txt", "w");
       fwrite($status_write, '1');
 
-        $url = 'http://covid_back.benji.link/faelle/';
+        $url = $configs["twitter-backend"] . '/faelle/';
         $url .= $yesterday;
 
         $dump = file_get_contents($url);
-
-      $webhookurl = "https://ptb.discord.com/api/webhooks/903430441879625808/YtwLR3rSeFHXwYFsqzGiAsGoyDDFUh8h1tZELWqEK8wVxXS_BCC4laQvMRzN9a4Od_Sp";
 
      echo 'Heute <strong>' . $yesterday . '</strong> fälle in Östereich.';
 
